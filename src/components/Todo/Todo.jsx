@@ -1,7 +1,10 @@
-export default function Todo({Todo}) {
+export default function Todo({todoData}) {
   return (
     <div>
-      <h1>Todo</h1>
+        <input type="checkbox" />
+        <h1> {todoData} </h1>
+        <butoon> Edit </butoon>
+        <button> Delete </button>
     </div>
   )
 }
