@@ -3,7 +3,7 @@ export default function Todo({todoData}) {
     <div>
         <input type="checkbox" />
         <h1> {todoData} </h1>
-        <butoon> Edit </butoon>
+        <button> Edit </button>
         <button> Delete </button>
     </div>
   )
