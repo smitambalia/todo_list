@@ -1,19 +1,6 @@
 import Todo from "../Todo/Todo";
-export default function TodoList() {
-  const todoList = [
-    {
-      id: 1,
-      todoData: "todo 1",
-    },
-    {
-      id: 2,
-      todoData: "todo 2",
-    },
-    {
-      id: 3,
-      todoData: "todo 3",
-    },
-  ];
+export default function TodoList({todoList}) {
+  
   return (
     <div>
       {todoList.length > 0 &&

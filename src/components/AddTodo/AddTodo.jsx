@@ -1,8 +1,17 @@
-export default function AddTodo() {
-    return (
-        <div>
-            <input type="text" placeholder="add a todo"/>
-            <button> Add </button>
-        </div>
-    )
-}    // AddTodo component
+import { useState } from "react";
+
+export default function AddTodo({updateList}) {
+  const [inputText, setInputText] = useState("");
+
+  return (
+    <div>
+      <input 
+        type="text" 
+        placeholder="add a todo"
+        value={inputText}
+        onChange={(e) => setInputText(e.target.value)}
+       />
+      <button onClick={() => updateList(inputText)}> Add </button>
+    </div>
+  );
+} // AddTodo component
