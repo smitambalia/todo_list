@@ -5,7 +5,12 @@ export default function TodoList({todoList}) {
     <div>
       {todoList.length > 0 &&
         todoList.map((todo) => {
-          return <Todo key={todo.id} todoData={todo.todoData} />;
+          return <Todo 
+                    key={todo.id} 
+                    id={todo.id} 
+                    todoData={todo.todoData} 
+                    isFinished={todo.finished} 
+                />;
         })}
     </div>
   );
