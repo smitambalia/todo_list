@@ -1,5 +1,5 @@
 import Todo from "../Todo/Todo";
-export default function TodoList({todoList}) {
+export default function TodoList({todoList,updateList}) {
   
   return (
     <div>
@@ -10,6 +10,18 @@ export default function TodoList({todoList}) {
                     id={todo.id} 
                     todoData={todo.todoData} 
                     isFinished={todo.finished} 
+                    changeFinished={
+                      (isFinished) => {
+                        const newTodoList = todoList.map((todoItem)=> {
+                          if(todoItem.id == todo.id){
+                            todo.finished = isFinished;
+                          }
+                          return todoItem;
+                        });
+
+                        updateList(newTodoList);
+                      }
+                    }
                 />;
         })}
     </div>

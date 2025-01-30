@@ -20,14 +20,15 @@ function App() {
   return (
     <>
       <AddTodo
-        updateList={(todo) =>
+        updateList={
+          (todo) =>
           settodoList([
             ...list,
             { id: list + 1, todoData: todo, finished: false },
           ])
         }
       />
-      <TodoList todoList={todoList} />
+      <TodoList todoList={todoList} updateList={settodoList}/>
     </>
   );
 }
