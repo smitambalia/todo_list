@@ -1,6 +1,8 @@
 import Todo from "../Todo/Todo";
-export default function TodoList({todoList,updateList}) {
-  
+import ToDoContext from "../../context/ToDoContext";
+import { useContext } from "react";
+export default function TodoList() {
+  const { todoList, settodoList } = useContext(ToDoContext);
   return (
     <div>
       {todoList.length > 0 &&
@@ -19,7 +21,15 @@ export default function TodoList({todoList,updateList}) {
                           return todoItem;
                         });
 
-                        updateList(newTodoList);
+                        settodoList(newTodoList);
+                      }
+                    }
+                    onDelete={
+                      () => {
+                        const newTodoList = todoList.filter((todoItem)=> {
+                          return todoItem.id !== todo.id;
+                        });
+                        settodoList(newTodoList);
                       }
                     }
                 />;

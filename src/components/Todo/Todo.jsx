@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Todo({todoData,isFinished,id,changeFinished}) {
+export default function Todo({todoData,isFinished,id,changeFinished,onDelete}) {
 
   const [finished,setFinished] = useState(isFinished);
 
@@ -13,10 +13,11 @@ export default function Todo({todoData,isFinished,id,changeFinished}) {
             setFinished(e.target.checked);
             changeFinished(e.target.checked);
           }}
+
           />
         <h1> {todoData} </h1>
         <button> Edit </button>
-        <button> Delete </button>
+        <button onClick={onDelete}> Delete </button>
     </div>
   )
 }
