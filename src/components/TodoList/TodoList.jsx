@@ -32,6 +32,18 @@ export default function TodoList() {
                         settodoList(newTodoList);
                       }
                     }
+                    onEdit={
+                      (todoText) => {
+                        const newTodoList = todoList.map((todoItem)=> {
+                          if(todoItem.id == todo.id){
+                            todo.todoData = todoText;
+                          }
+                          return todoItem;
+                        });
+
+                        settodoList(newTodoList);
+                      }
+                    }
                 />;
         })}
     </div>
