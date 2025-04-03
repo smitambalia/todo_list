@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-    {/* <ToDoContext.Provider value={{ todoList, settodoList }}>
+      <ToDoContext.Provider value={{ todoList, settodoList }}>
       <AddTodo
         updateList={(todo) =>
           settodoList([
@@ -38,21 +38,20 @@ function App() {
         }
       />
       <TodoList />
-      {counterCondition && <Counter> </Counter>}
+      {/* {counterCondition && <Counter> </Counter>} */}
       
-    </ToDoContext.Provider>  */}
-    
-    <div style={{display : "flex"}}>
-    
-    <Card InnnerContent={
-       <div style={{color : "green"}}>
-         How do you want to post your todo?
-         <br/>
-         <input type="text" />
-       </div>
-      } />
-      <Card InnnerContent={"hi there"} />
-    </div>
+    </ToDoContext.Provider>  
+
+      <div style={{ display: "flex" }}>
+        <Card>
+          <div style={{ color: "green" }}>
+            How do you want to post your todo?
+            <br />
+            <input type="text" />
+          </div>
+        </Card>
+        <Card>Hi there</Card>
+      </div>
     </>
   );
 }
@@ -60,28 +59,28 @@ function App() {
 function Counter() {
   const [count, setCount] = useState(0);
 
-    useEffect(function () {
-    setInterval(function ()  {
-      console.log("from inside the set interval")
-      setCount(count => count + 1);
-    }, 1000)
-  },[]);
+  useEffect(function () {
+    setInterval(function () {
+      console.log("from inside the set interval");
+      setCount((count) => count + 1);
+    }, 1000);
+  }, []);
 
   return <h1>{count}</h1>;
 }
 
-function Card({ InnnerContent }) {
+function Card({ children }) {
   return (
     <div
       style={{
-        background: "black",
+        background: "grey",
         color: "white",
         padding: 10,
         borderRadius: 10,
         margin: 10,
       }}
     >
-      {InnnerContent}
+      {children}
     </div>
   );
 }
