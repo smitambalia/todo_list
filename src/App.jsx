@@ -3,6 +3,8 @@ import AddTodo from "./components/AddTodo/AddTodo";
 import TodoList from "./components/TodoList/TodoList";
 import ToDoContext from "./context/ToDoContext";
 import Todo from "./components/Todo/Todo";
+import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import Card from "./components/Cards/Card";
 
 function App() {
   const list = [
@@ -28,30 +30,46 @@ function App() {
 
   return (
     <>
-      <ToDoContext.Provider value={{ todoList, settodoList }}>
-      <AddTodo
-        updateList={(todo) =>
-          settodoList([
-            ...list,
-            { id: list + 1, todoData: todo, finished: false },
-          ])
-        }
-      />
-      <TodoList />
-      {/* {counterCondition && <Counter> </Counter>} */}
-      
-    </ToDoContext.Provider>  
-
-      <div style={{ display: "flex" }}>
-        <Card>
-          <div style={{ color: "green" }}>
-            How do you want to post your todo?
-            <br />
-            <input type="text" />
-          </div>
-        </Card>
-        <Card>Hi there</Card>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<h1>Home</h1>} />
+            <Route
+              path="/cards"
+              element={
+                <div style={{ display: "flex" }}>
+                  <Card>
+                    <div style={{ color: "green" }}>
+                      How do you want to post your todo?
+                      <br />
+                      <input type="text" />
+                    </div>
+                  </Card>
+                  <Card>Hi there</Card>
+                </div>
+              }
+            />
+            <Route
+              path="/todo"
+              element={
+                <ToDoContext.Provider value={{ todoList, settodoList }}>
+                  <AddTodo
+                    updateList={(todo) =>
+                      settodoList([
+                        ...list,
+                        { id: list + 1, todoData: todo, finished: false },
+                      ])
+                    }
+                  />
+                  <TodoList />
+                  {counterCondition && <Counter> </Counter>}
+                </ToDoContext.Provider>
+              }
+            />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
@@ -69,19 +87,37 @@ function Counter() {
   return <h1>{count}</h1>;
 }
 
-function Card({ children }) {
+function ErrorPage() {
   return (
-    <div
-      style={{
-        background: "grey",
-        color: "white",
-        padding: 10,
-        borderRadius: 10,
-        margin: 10,
-      }}
-    >
-      {children}
+    <div>
+      <h1>404</h1>
+      <p>Page not found</p>
     </div>
+  );
+}
+
+function Layout() {
+  return (
+    <>
+      <div style={{ height: "100vh" }}>
+        <nav>
+          <span>
+            <Link to="/">Home</Link>{" "}
+          </span>
+
+          <span>
+            <Link to="/todo">Todo</Link>{" "}
+          </span>
+          <span>
+            <Link to="/cards">Cards</Link>{" "}
+          </span>
+        </nav>
+        <div style={{ height: "90vh" }}>
+          <Outlet />
+        </div>
+        Footer
+      </div>
+    </>
   );
 }
 export default App;
