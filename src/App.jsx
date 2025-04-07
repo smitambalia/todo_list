@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddTodo from "./components/AddTodo/AddTodo";
 import TodoList from "./components/TodoList/TodoList";
 import ToDoContext from "./context/ToDoContext";
@@ -66,6 +66,8 @@ function App() {
                 </ToDoContext.Provider>
               }
             />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/clock" element={<Clock />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
@@ -74,6 +76,29 @@ function App() {
   );
 }
 
+function Clock() {
+  const [currentCount, setCurrentCount] = useState(0);
+  let [timer,setTimer] = useState(0);
+  const timerRef = useRef(0);
+
+  function startClock() {
+    let value  = setInterval(function () {
+      setCurrentCount((currentCount) => currentCount + 1);
+    }, 1000);
+    timerRef.current = value;
+  }
+
+  function clearClock() {
+    clearInterval(timerRef.current);
+  }
+  return (
+    <div>
+      {currentCount}
+      <button onClick={startClock}> Start Clock </button>
+      <button onClick={clearClock}> Stop Clock </button>
+    </div>
+  );
+}
 function Counter() {
   const [count, setCount] = useState(0);
 
@@ -96,22 +121,52 @@ function ErrorPage() {
   );
 }
 
+function SignUp() {
+  const inputRef = useRef(null);
+  function getFocus() {
+    inputRef.current.focus();
+  }
+  return (
+    <div>
+      <h1>Sign Up</h1>
+      <div>
+        <input ref={inputRef} type={"text"} />
+      </div>
+      <div>
+        <input type={"text"} />
+      </div>
+      <div>
+        <button onClick={getFocus}> Submit </button>
+      </div>
+    </div>
+  );
+}
+
 function Layout() {
   return (
     <>
       <div style={{ height: "100vh" }}>
-        <nav>
+        <>
           <span>
-            <Link to="/">Home</Link>{" "}
-          </span>
-
+            <Link to="/">Home</Link>
+          </span>{" "}
+          |
           <span>
-            <Link to="/todo">Todo</Link>{" "}
-          </span>
+            <Link to="/todo">Todo</Link>
+          </span>{" "}
+          |
           <span>
-            <Link to="/cards">Cards</Link>{" "}
+            <Link to="/cards">Cards</Link>
+          </span>{" "}
+          |
+          <span>
+            <Link to="/signup">Sign Up</Link>
           </span>
-        </nav>
+          |
+          <span>
+            <Link to="/clock">Clock</Link>
+          </span>
+        </>
         <div style={{ height: "90vh" }}>
           <Outlet />
         </div>
