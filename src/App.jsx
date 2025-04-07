@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState, useContext } from "react";
 import AddTodo from "./components/AddTodo/AddTodo";
 import TodoList from "./components/TodoList/TodoList";
 import ToDoContext from "./context/ToDoContext";
@@ -68,6 +68,7 @@ function App() {
             />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/clock" element={<Clock />} />
+            <Route path="/smartbulb" element={<SmartBulb />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
@@ -76,13 +77,56 @@ function App() {
   );
 }
 
+/**
+ * Create a context for the smart bulb
+ * The context will provide the state and functions to control the smart bulb
+ * The context will be used in the SmartBulb component
+ */
+const SmartBulbContext = createContext();
+
+function SmartBulbProvider({ children }) {
+  const [isOn, setIsOn] = useState(false);
+  /**
+   * set Context provider
+   * @param {boolean} isOn - The state of the smart bulb
+   * @param {function} setIsOn - The function to set the state of the smart bulb
+   */
+
+  return (
+    <SmartBulbContext.Provider value={{ isOn: isOn, setIsOn: setIsOn }}>
+      {children}
+    </SmartBulbContext.Provider>
+  );
+}
+
+function SmartBulb() {
+  return (
+    <>
+      <SmartBulbProvider>
+        <SmartBulbStatus />
+        <SmartBulbButton />
+      </SmartBulbProvider>
+    </>
+  );
+}
+
+function SmartBulbButton() {
+  const { setIsOn } = useContext(SmartBulbContext);
+  return <button onClick={() => setIsOn((isOn) => !isOn)}> toggle </button>;
+}
+
+function SmartBulbStatus() {
+  const { isOn } = useContext(SmartBulbContext);
+  return <div> {isOn ? "bulb on" : "bulb off"} </div>;
+}
+
 function Clock() {
   const [currentCount, setCurrentCount] = useState(0);
-  let [timer,setTimer] = useState(0);
+  let [timer, setTimer] = useState(0);
   const timerRef = useRef(0);
 
   function startClock() {
-    let value  = setInterval(function () {
+    let value = setInterval(function () {
       setCurrentCount((currentCount) => currentCount + 1);
     }, 1000);
     timerRef.current = value;
@@ -165,6 +209,10 @@ function Layout() {
           |
           <span>
             <Link to="/clock">Clock</Link>
+          </span>
+          |
+          <span>
+            <Link to="/smartbulb">Smart Bulb</Link>
           </span>
         </>
         <div style={{ height: "90vh" }}>
