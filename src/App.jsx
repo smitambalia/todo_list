@@ -5,7 +5,7 @@ import ToDoContext from "./context/ToDoContext";
 import Todo from "./components/Todo/Todo";
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import Card from "./components/Cards/Card";
-
+import { Countdown } from "./components/Countdown/Countdown";
 function App() {
   const list = [
     {
@@ -62,13 +62,14 @@ function App() {
                     }
                   />
                   <TodoList />
-                  {counterCondition && <Counter> </Counter>}
+                  {/* {counterCondition && <Counter> </Counter>} */}
                 </ToDoContext.Provider>
               }
             />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/clock" element={<Clock />} />
             <Route path="/smartbulb" element={<SmartBulb />} />
+            <Route path="countdown" element={<Countdown />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
@@ -76,6 +77,7 @@ function App() {
     </>
   );
 }
+
 
 /**
  * Create a context for the smart bulb
@@ -213,6 +215,10 @@ function Layout() {
           |
           <span>
             <Link to="/smartbulb">Smart Bulb</Link>
+          </span>
+          |
+          <span>
+            <Link to="/countdown">Countdown</Link>
           </span>
         </>
         <div style={{ height: "90vh" }}>
