@@ -1,0 +1,9 @@
+body {
+    font-family: 'Sans-serif';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input {
+    border: none;
+}

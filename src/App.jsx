@@ -69,7 +69,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/clock" element={<Clock />} />
             <Route path="/smartbulb" element={<SmartBulb />} />
-            <Route path="countdown" element={<Countdown />} />
+            <Route path="/countdown" element={<Countdown />} />
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
